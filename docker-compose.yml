@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  node0:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    environment:
+      S3_BUCKET: "your-bucket-name"
+      SHARD_KEY: "shard_0.npy"
+    ports:
+      - "8001:8000"
+
+  node1:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    environment:
+      S3_BUCKET: "your-bucket-name"
+      SHARD_KEY: "shard_1.npy"
+    ports:
+      - "8002:8000"
+
+  node2:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    environment:
+      S3_BUCKET: "your-bucket-name"
+      SHARD_KEY: "shard_2.npy"
+    ports:
+      - "8003:8000"
+
+  router:
+    build:
+      context: .
+      dockerfile: Dockerfile.router
+    environment:
+      NODE1_URL: "http://node0:8000/search_local"
+      NODE2_URL: "http://node1:8000/search_local"
+      NODE3_URL: "http://node2:8000/search_local"
+    ports:
+      - "9000:9000"
