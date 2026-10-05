@@ -10,6 +10,7 @@ services:
       SHARD_KEY: "shard_0.npy"
     ports:
       - "8001:8000"
+    env_file: .env
 
   node1:
     build:
@@ -20,6 +21,7 @@ services:
       SHARD_KEY: "shard_1.npy"
     ports:
       - "8002:8000"
+    env_file: .env
 
   node2:
     build:
@@ -30,6 +32,7 @@ services:
       SHARD_KEY: "shard_2.npy"
     ports:
       - "8003:8000"
+    env_file: .env
 
   router:
     build:
