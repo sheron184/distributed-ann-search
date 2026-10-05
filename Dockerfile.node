@@ -6,7 +6,10 @@ WORKDIR /app
 RUN pip install fastapi uvicorn boto3 faiss-cpu numpy
 
 # Copy node code
-COPY node.py .
+COPY app/node.py .
+COPY requirements.txt .
+
+RUN pip install -r requirements.txt
 
 # Expose port
 EXPOSE 8000
