@@ -1,18 +1,7 @@
 FROM python:3.10-slim
-
+ENV PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1
 WORKDIR /app
-
-# Install dependencies
-RUN pip install fastapi uvicorn boto3 faiss-cpu numpy
-
-# Copy node code
+RUN pip install fastapi uvicorn boto3 faiss-cpu "numpy<2"
 COPY app/node.py .
-COPY requirements.txt .
-
-RUN pip install -r requirements.txt
-
-# Expose port
 EXPOSE 8000
-
-# Start ANN node
 CMD ["uvicorn", "node:app", "--host", "0.0.0.0", "--port", "8000"]
